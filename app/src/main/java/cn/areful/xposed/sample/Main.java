@@ -1,5 +1,6 @@
 package cn.areful.xposed.sample;
 
+import cn.areful.xposed.sample.hooks.HookHelper;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 

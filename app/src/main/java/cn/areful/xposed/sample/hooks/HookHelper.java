@@ -1,16 +1,14 @@
-package cn.areful.xposed.sample;
+package cn.areful.xposed.sample.hooks;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.areful.xposed.hook.BaseHookService;
 import cn.areful.xposed.hook.HookEntry;
-import cn.areful.xposed.sample.hooks.LocationAPIHook;
-import cn.areful.xposed.sample.hooks.StorageAPIHook;
-import cn.areful.xposed.sample.hooks.TelephoneManagerAPIHook;
 
 public class HookHelper extends BaseHookService {
-    public static final String PACKAGE_NAME = "cn.areful";
+    public static final String TAG = "areful--";
+    public static String PACKAGE_NAME = "com.house365.newhouse";
 
     @Override
     public List<HookEntry> getHookEntries() {

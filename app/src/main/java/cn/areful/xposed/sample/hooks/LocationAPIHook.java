@@ -10,16 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.areful.xposed.hook.HookEntry;
-import cn.areful.xposed.sample.HookHelper;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 
 public class LocationAPIHook {
-    private static final String PACKAGE_NAME = HookHelper.PACKAGE_NAME;
 
     public static List<HookEntry> list() {
-        List<HookEntry> list = new ArrayList<>();
+        String PACKAGE_NAME = HookHelper.PACKAGE_NAME;
 
+        List<HookEntry> list = new ArrayList<>();
         list.add(new HookEntry(
                 PACKAGE_NAME,
                 "android.location.LocationManager",
@@ -28,7 +27,7 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
         list.add(new HookEntry(
@@ -39,7 +38,7 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
         list.add(new HookEntry(
@@ -50,7 +49,7 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
         list.add(new HookEntry(
@@ -61,7 +60,7 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
 
@@ -73,20 +72,9 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
-//        list.add(new HookEntry(
-//                PACKAGE_NAME,
-//                "android.location.LocationManager",
-//                "requestLocationUpdates",
-//                new Object[]{String.class, Long.class, Float.class, Object.class},
-//                new XC_MethodHook() {
-//                    @Override
-//                    protected void beforeHookedMethod(MethodHookParam param) {
-//                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
-//                    }
-//                }));
 
         for (Method method : LocationManager.class.getDeclaredMethods()) {
             if (method.getName().equals("requestLocationUpdates")
@@ -95,7 +83,7 @@ public class LocationAPIHook {
                 XposedBridge.hookMethod(method, new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 });
             }
@@ -109,7 +97,7 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
         list.add(new HookEntry(
@@ -120,7 +108,7 @@ public class LocationAPIHook {
                 new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) {
-                        Log.d("areful--", Log.getStackTraceString(new Throwable()));
+                        Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
                     }
                 }));
 
