@@ -46,6 +46,8 @@
         android:padding="16dp"
         android:text="@android:string/ok"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
 </LinearLayout>
