@@ -8,38 +8,38 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.hook.HookEntry;
+import cn.areful.xposed.hook.MethodHook;
 import de.robv.android.xposed.XposedBridge;
 
 public class LocationAPIHook {
     private static final String PACKAGE_NAME = HookHelper.PACKAGE_NAME;
 
-    public static List<HookEntry> list() {
-        List<HookEntry> list = new ArrayList<>();
+    public static List<MethodHook> list() {
+        List<MethodHook> list = new ArrayList<>();
 
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.location.LocationManager",
                 "addGpsStatusListener",
                 new Object[]{GpsStatus.Listener.class}
         ));
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.location.LocationManager",
                 "getGpsStatus",
                 new Object[]{android.location.GpsStatus.class}));
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.location.LocationManager",
                 "getLastKnownLocation",
                 new Object[]{String.class}));
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.net.wifi.WifiManager",
                 "getScanResults",
                 new Object[]{}));
 
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.telephony.TelephonyManager",
                 "getCellLocation",
@@ -49,7 +49,7 @@ public class LocationAPIHook {
             if (method.getName().equals("requestLocationUpdates")
                     && !Modifier.isAbstract(method.getModifiers())
                     && Modifier.isPublic(method.getModifiers())) {
-                XposedBridge.hookMethod(method, new HookEntry(
+                XposedBridge.hookMethod(method, new MethodHook(
                         PACKAGE_NAME,
                         "android.location.LocationManager",
                         "requestLocationUpdates",
@@ -57,12 +57,12 @@ public class LocationAPIHook {
             }
         }
 
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.telephony.TelephonyManager",
                 "getAllCellInfo",
                 new Object[]{}));
-        list.add(new HookEntry(
+        list.add(new MethodHook(
                 PACKAGE_NAME,
                 "android.telephony.TelephonyManager",
                 "getNeighboringCellInfo",

@@ -1,13 +1,14 @@
 package cn.areful.xposed.hook;
 
+import java.util.List;
+
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public abstract class BaseHookService implements HookEntryInterface {
+public abstract class BaseHooker {
 
-    @Override
     public void hook(final XC_LoadPackage.LoadPackageParam params) {
-        for (HookEntry entry : getHookEntries()) {
+        for (MethodHook entry : getHookEntries()) {
             if (params.packageName.equals(entry.packageName)) {
                 XposedHelpers.findAndHookMethod(
                         entry.className,
@@ -17,4 +18,6 @@ public abstract class BaseHookService implements HookEntryInterface {
             }
         }
     }
+
+    public abstract List<MethodHook> getHookEntries();
 }

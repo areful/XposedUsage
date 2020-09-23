@@ -5,8 +5,8 @@ import android.util.Log;
 import cn.areful.xposed.sample.hooks.HookHelper;
 import de.robv.android.xposed.XC_MethodHook;
 
-public class HookEntry extends XC_MethodHook {
-    public HookEntry(String packageName, String className, String methodName, Object[] args) {
+public class MethodHook extends XC_MethodHook {
+    public MethodHook(String packageName, String className, String methodName, Object[] args) {
         this.packageName = packageName;
         this.className = className;
         this.methodName = methodName;
@@ -27,8 +27,7 @@ public class HookEntry extends XC_MethodHook {
 
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-        super.beforeHookedMethod(param);
         Log.d(HookHelper.TAG, Log.getStackTraceString(new Throwable()));
-        HookHelper.send(methodName);
+        HookHelper.sendMethodInterceptedBroadcast(methodName);
     }
 }

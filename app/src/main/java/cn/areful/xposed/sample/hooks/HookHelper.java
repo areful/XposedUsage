@@ -8,10 +8,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.hook.BaseHookService;
-import cn.areful.xposed.hook.HookEntry;
+import cn.areful.xposed.hook.BaseHooker;
+import cn.areful.xposed.hook.MethodHook;
 
-public class HookHelper extends BaseHookService {
+public class HookHelper extends BaseHooker {
     public static final String PACKAGE_NAME = "cn.areful.myapplication";
 
     public static final String TAG = "areful--";
@@ -20,20 +20,16 @@ public class HookHelper extends BaseHookService {
     public static final String EXTRA_LOG = "log";
 
     @Override
-    public List<HookEntry> getHookEntries() {
-        List<HookEntry> list = new ArrayList<>();
-
+    public List<MethodHook> getHookEntries() {
+        List<MethodHook> list = new ArrayList<>();
         list.addAll(LocationAPIHook.list());
-
         list.addAll(StorageAPIHook.list());
-
         list.addAll(TelephoneManagerAPIHook.list());
-
         return list;
     }
 
-    public static void send(String methodName) {
-        Log.d(HookHelper.TAG, "sendBroadcast()");
+    public static void sendMethodInterceptedBroadcast(String methodName) {
+        Log.d(HookHelper.TAG, "sendMethodInterceptedBroadcast()");
 
         Context context = AndroidAppHelper.currentApplication().getApplicationContext();
         Intent intent = new Intent(ACTION_NAME);
