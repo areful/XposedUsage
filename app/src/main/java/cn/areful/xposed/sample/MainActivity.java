@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import cn.areful.xposed.sample.hooks.HookHelper;
+import cn.areful.xposed.sample.hooks.MethodHookHelper;
 import cn.areful.xposed.sample.hooks.HookPreferences;
 import cn.areful.xposed.utils.AppUtils;
 
@@ -31,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         TextView currentPackageText = findViewById(R.id.currentPackageText);
-        if (!TextUtils.isEmpty(HookHelper.PACKAGE_NAME)) {
-            currentPackageText.setText(String.format("current package name: %s", HookHelper.PACKAGE_NAME));
+        if (!TextUtils.isEmpty(MethodHookHelper.PACKAGE_NAME)) {
+            currentPackageText.setText(String.format("current package name: %s", MethodHookHelper.PACKAGE_NAME));
             currentPackageText.setVisibility(View.VISIBLE);
         } else {
             currentPackageText.setVisibility(View.GONE);

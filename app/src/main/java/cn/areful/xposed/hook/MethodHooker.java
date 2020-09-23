@@ -5,7 +5,7 @@ import java.util.List;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public abstract class BaseHooker {
+public abstract class MethodHooker {
 
     public void hook(final XC_LoadPackage.LoadPackageParam params) {
         for (MethodHook entry : getHookEntries()) {

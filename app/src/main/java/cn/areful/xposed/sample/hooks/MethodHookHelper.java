@@ -8,11 +8,11 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.hook.BaseHooker;
 import cn.areful.xposed.hook.MethodHook;
+import cn.areful.xposed.hook.MethodHooker;
 
-public class HookHelper extends BaseHooker {
-    public static final String PACKAGE_NAME = "cn.areful.myapplication";
+public class MethodHookHelper extends MethodHooker {
+    public static final String PACKAGE_NAME = "com.chebada";
 
     public static final String TAG = "areful--";
     public static final String ACTION_NAME = "com.xbeats.myapplication.event";
@@ -22,14 +22,14 @@ public class HookHelper extends BaseHooker {
     @Override
     public List<MethodHook> getHookEntries() {
         List<MethodHook> list = new ArrayList<>();
-        list.addAll(LocationAPIHook.list());
-        list.addAll(StorageAPIHook.list());
-        list.addAll(TelephoneManagerAPIHook.list());
+        list.addAll(HookLocationAPI.list());
+        list.addAll(HookStorageAPI.list());
+        list.addAll(HookTelephoneManagerAPI.list());
         return list;
     }
 
     public static void sendMethodInterceptedBroadcast(String methodName) {
-        Log.d(HookHelper.TAG, "sendMethodInterceptedBroadcast()");
+        Log.d(MethodHookHelper.TAG, "sendMethodInterceptedBroadcast()");
 
         Context context = AndroidAppHelper.currentApplication().getApplicationContext();
         Intent intent = new Intent(ACTION_NAME);

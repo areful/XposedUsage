@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.areful.xposed.sample.databinding.MainListItemViewBinding;
-import cn.areful.xposed.sample.hooks.HookHelper;
+import cn.areful.xposed.sample.hooks.MethodHookHelper;
 
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -31,7 +31,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mList = list;
         for (int i = 0; i < list.size(); i++) {
             ApplicationInfo ai = list.get(i);
-            if (TextUtils.equals(ai.packageName, HookHelper.PACKAGE_NAME)) {
+            if (TextUtils.equals(ai.packageName, MethodHookHelper.PACKAGE_NAME)) {
                 mIndex = i;
                 break;
             }
