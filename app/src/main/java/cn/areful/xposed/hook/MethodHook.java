@@ -2,10 +2,11 @@ package cn.areful.xposed.hook;
 
 import android.util.Log;
 
-import cn.areful.xposed.sample.hooks.MethodHookHelper;
 import de.robv.android.xposed.XC_MethodHook;
 
 public class MethodHook extends XC_MethodHook {
+    public static final String TAG = "areful--";
+
     public MethodHook(String packageName, String className, String methodName, Object[] args) {
         this.packageName = packageName;
         this.className = className;
@@ -27,7 +28,7 @@ public class MethodHook extends XC_MethodHook {
 
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-        Log.d(MethodHookHelper.TAG, Log.getStackTraceString(new Throwable()));
-        MethodHookHelper.sendMethodInterceptedBroadcast(methodName);
+        Log.d(TAG, Log.getStackTraceString(new Throwable()));
+        MethodBroadcastSender.send(methodName);
     }
 }
