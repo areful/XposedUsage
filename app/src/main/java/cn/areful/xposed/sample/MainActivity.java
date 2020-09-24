@@ -1,62 +1,99 @@
 package cn.areful.xposed.sample;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import cn.areful.xposed.sample.hooks.MethodHookHelper;
-import cn.areful.xposed.sample.hooks.HookPreferences;
+import cn.areful.xposed.sample.databinding.ActivityMainBinding;
 import cn.areful.xposed.utils.AppUtils;
+import cn.areful.xposed.utils.ConfigUtils;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding mBinding;
     private MainAdapter mAdapter;
+
+    private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            PackageManager pm = getPackageManager();
+            List<ApplicationInfo> list = AppUtils.getAppList(pm);
+            mAdapter.setData(list);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-//        init();
+        initHeader(false);
+
+        mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        PackageManager pm = getPackageManager();
+        List<ApplicationInfo> list = AppUtils.getAppList(pm);
+        mBinding.recyclerView.setAdapter(mAdapter = new MainAdapter(pm).setData(list));
+
+        mBinding.btn.setVisibility(list.size() > 0 ? View.VISIBLE : View.GONE);
+        mBinding.btn.setOnClickListener(v -> saveConfig(mAdapter.getSelectedApplicationInfo()));
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_INSTALL);
+        intentFilter.addAction(Intent.ACTION_UNINSTALL_PACKAGE);
+        intentFilter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+        intentFilter.addDataScheme("package");
+        registerReceiver(mReceiver, intentFilter);
     }
 
-    private void init() {
-        TextView currentPackageText = findViewById(R.id.currentPackageText);
-        if (!TextUtils.isEmpty(MethodHookHelper.PACKAGE_NAME)) {
-            currentPackageText.setText(String.format("current package name: %s", MethodHookHelper.PACKAGE_NAME));
-            currentPackageText.setVisibility(View.VISIBLE);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
+    }
+
+    private void initHeader(boolean needReboot) {
+        String packageName = ConfigUtils.getPackageName();
+        if (!TextUtils.isEmpty(packageName)) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("current package name: ").append(packageName);
+            if (needReboot) {
+                sb.append("\ntake effect after reboot.");
+            }
+            mBinding.currentPackageText.setText(sb.toString());
+            mBinding.currentPackageText.setVisibility(View.VISIBLE);
         } else {
-            currentPackageText.setVisibility(View.GONE);
+            mBinding.currentPackageText.setVisibility(View.GONE);
+        }
+    }
+
+    private void saveConfig(ApplicationInfo ai) {
+        if (ai == null) {
+            Toast.makeText(getApplicationContext(), "Get app info failed", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        PackageManager pm = getPackageManager();
-        recyclerView.setAdapter(mAdapter = new MainAdapter(pm));
+        if (!ConfigUtils.setPackageName(ai.packageName)) {
+            Toast.makeText(getApplicationContext(), "Save config failed", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        List<ApplicationInfo> list = AppUtils.getAppList(pm);
-        mAdapter.setData(list);
+        String toastText = String.format("package name has changed to %s，  take effect after reboot……", ai.packageName);
+        Toast.makeText(getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
 
-        View btn = findViewById(R.id.btn);
-        btn.setVisibility(list.size() > 0 ? View.VISIBLE : View.GONE);
-        btn.setOnClickListener(v -> {
-            ApplicationInfo ai = mAdapter.getSelectedApplicationInfo();
-            if (ai != null) {
-                HookPreferences.setPackageName(v.getContext(), ai.packageName);
-
-                String toastText = String.format("package name has changed to %s， " +
-                        "take effect after reboot……", ai.packageName);
-                Toast.makeText(v.getContext().getApplicationContext(), toastText, Toast.LENGTH_SHORT).show();
-            }
-        });
+        initHeader(true);
     }
 }

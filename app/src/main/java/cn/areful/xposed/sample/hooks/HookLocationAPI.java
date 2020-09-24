@@ -12,35 +12,34 @@ import cn.areful.xposed.hook.MethodHook;
 import de.robv.android.xposed.XposedBridge;
 
 public class HookLocationAPI {
-    private static final String PACKAGE_NAME = MethodHookHelper.PACKAGE_NAME;
 
-    public static List<MethodHook> list() {
+    public static List<MethodHook> list(String packageName) {
         List<MethodHook> list = new ArrayList<>();
 
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.location.LocationManager",
                 "addGpsStatusListener",
                 new Object[]{GpsStatus.Listener.class}
         ));
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.location.LocationManager",
                 "getGpsStatus",
                 new Object[]{android.location.GpsStatus.class}));
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.location.LocationManager",
                 "getLastKnownLocation",
                 new Object[]{String.class}));
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.net.wifi.WifiManager",
                 "getScanResults",
                 new Object[]{}));
 
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.telephony.TelephonyManager",
                 "getCellLocation",
                 new Object[]{}));
@@ -50,7 +49,7 @@ public class HookLocationAPI {
                     && !Modifier.isAbstract(method.getModifiers())
                     && Modifier.isPublic(method.getModifiers())) {
                 XposedBridge.hookMethod(method, new MethodHook(
-                        PACKAGE_NAME,
+                        packageName,
                         "android.location.LocationManager",
                         "requestLocationUpdates",
                         new Object[]{}));
@@ -58,12 +57,12 @@ public class HookLocationAPI {
         }
 
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.telephony.TelephonyManager",
                 "getAllCellInfo",
                 new Object[]{}));
         list.add(new MethodHook(
-                PACKAGE_NAME,
+                packageName,
                 "android.telephony.TelephonyManager",
                 "getNeighboringCellInfo",
                 new Object[]{}));
