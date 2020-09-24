@@ -22,12 +22,21 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final PackageManager mPackageManager;
     private List<ApplicationInfo> mList = new ArrayList<>();
     private int mIndex = -1;
+    private OnItemSelectedListener mListener;
+
+    public interface OnItemSelectedListener {
+        void onItemSelected();
+    }
+
+    public void setOnItemSelectedListener(OnItemSelectedListener listener) {
+        mListener = listener;
+    }
 
     public MainAdapter(PackageManager pm) {
         mPackageManager = pm;
     }
 
-    public MainAdapter setData(@NonNull List<ApplicationInfo> list) {
+    public void setData(@NonNull List<ApplicationInfo> list) {
         mList = list;
         mIndex = -1;
         String packageName = ConfigUtils.getPackageName();
@@ -38,8 +47,12 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 break;
             }
         }
+
+        if (mListener != null) {
+            mListener.onItemSelected();
+        }
+
         notifyDataSetChanged();
-        return this;
     }
 
     public ApplicationInfo getSelectedApplicationInfo() {
@@ -60,7 +73,14 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         MainViewHolder holder = (MainViewHolder) viewHolder;
         holder.setData(mPackageManager, mList.get(position), mIndex == position);
         holder.itemView.setOnClickListener(v -> {
-            mIndex = position;
+            if (mIndex == position) {
+                mIndex = -1;
+            } else {
+                mIndex = position;
+            }
+            if (mListener != null) {
+                mListener.onItemSelected();
+            }
             notifyDataSetChanged();
         });
     }

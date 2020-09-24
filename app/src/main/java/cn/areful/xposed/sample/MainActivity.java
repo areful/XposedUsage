@@ -45,10 +45,17 @@ public class MainActivity extends AppCompatActivity {
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         PackageManager pm = getPackageManager();
         List<ApplicationInfo> list = AppUtils.getAppList(pm);
-        mBinding.recyclerView.setAdapter(mAdapter = new MainAdapter(pm).setData(list));
+        mAdapter = new MainAdapter(pm);
+        mAdapter.setOnItemSelectedListener(() -> {
+            //
+            mBinding.btn.setEnabled(mAdapter.getSelectedApplicationInfo() != null);
+        });
+        mBinding.recyclerView.setAdapter(mAdapter);
+        mAdapter.setData(list);
 
         mBinding.btn.setVisibility(list.size() > 0 ? View.VISIBLE : View.GONE);
         mBinding.btn.setOnClickListener(v -> saveConfig(mAdapter.getSelectedApplicationInfo()));
+        mBinding.btn.setEnabled(mAdapter.getSelectedApplicationInfo() != null);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_PACKAGE_ADDED);

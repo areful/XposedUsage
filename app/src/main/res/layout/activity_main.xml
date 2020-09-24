@@ -31,12 +31,13 @@
             tools:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/main_list_item_view" />
 
-        <TextView
+        <Button
             android:id="@+id/btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/selector_main_ensure_btn"
+            android:enabled="false"
             android:gravity="center"
             android:padding="16dp"
             android:text="@android:string/ok"
