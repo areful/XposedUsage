@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.areful.xposed.sample">
+    package="com.chebada.hooklib.app">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_hook_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_hook_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="cn.areful.xposed.sample.fileprovider"
+            android:authorities="com.chebada.hooklib.app.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -26,21 +26,19 @@
             android:name="xposedmodule"
             android:value="true" />
 
-        <!-- 模块描述 -->
         <meta-data
             android:name="xposeddescription"
-            android:value="Areful's Xposed Module Usage" />
+            android:value="Hook system's API to check permissions used in app" />
 
-        <!-- 最低版本号 -->
         <meta-data
             android:name="xposedminversion"
             android:value="30" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".HookConfigActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

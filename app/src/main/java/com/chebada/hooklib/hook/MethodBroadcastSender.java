@@ -1,14 +1,17 @@
-package cn.areful.xposed.hook;
+package com.chebada.hooklib.hook;
 
 import android.app.AndroidAppHelper;
 import android.content.Intent;
 import android.util.Log;
 
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public class MethodBroadcastSender {
-    private static final String TAG = MethodHook.TAG;
-    private static final String ACTION_NAME = "com.xbeats.myapplication.event";
-    private static final String EXTRA_METHOD_NAME = "apiName";
-    private static final String EXTRA_LOG = "log";
+    public static final String TAG = "CbdMethodHook";
+    public static final String ACTION_NAME = "com.xbeats.myapplication.event";
+    public static final String EXTRA_METHOD_NAME = "apiName";
+    public static final String EXTRA_LOG = "log";
 
     public static void send(String methodName) {
         Log.d(TAG, "MethodBroadcastSender.send()");

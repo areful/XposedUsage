@@ -1,4 +1,4 @@
-package cn.areful.xposed.sample;
+package com.chebada.hooklib.app;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,16 +15,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chebada.hooklib.app.databinding.ActivityHookConfigBinding;
+import com.chebada.hooklib.utils.AppUtils;
+import com.chebada.hooklib.utils.ConfigUtils;
+
 import java.util.List;
 
-import cn.areful.xposed.sample.databinding.ActivityMainBinding;
-import cn.areful.xposed.utils.AppUtils;
-import cn.areful.xposed.utils.ConfigUtils;
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
+public class HookConfigActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
-
-    private ActivityMainBinding mBinding;
-    private MainAdapter mAdapter;
+    private ActivityHookConfigBinding mBinding;
+    private HookConfigAdapter mAdapter;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -38,14 +41,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_hook_config);
 
         initHeader(false);
 
         mBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         PackageManager pm = getPackageManager();
         List<ApplicationInfo> list = AppUtils.getAppList(pm);
-        mAdapter = new MainAdapter(pm);
+        mAdapter = new HookConfigAdapter(pm);
         mAdapter.setOnItemSelectedListener(() -> {
             //
             mBinding.btn.setEnabled(mAdapter.getSelectedApplicationInfo() != null);

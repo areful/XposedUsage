@@ -1,4 +1,4 @@
-package cn.areful.xposed.utils;
+package com.chebada.hooklib.utils;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -7,6 +7,9 @@ import android.content.pm.PackageManager;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public class AppUtils {
 
     public static List<ApplicationInfo> getAppList(PackageManager pm) {

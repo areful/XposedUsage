@@ -1,16 +1,20 @@
-package cn.areful.xposed.sample.hooks;
+package com.chebada.hooklib.hookapis;
 
 import android.location.GpsStatus;
 import android.location.LocationManager;
+
+import com.chebada.hooklib.hook.MethodHook;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.hook.MethodHook;
 import de.robv.android.xposed.XposedBridge;
 
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public class HookLocationAPI {
 
     public static List<MethodHook> list(String packageName) {
@@ -26,7 +30,7 @@ public class HookLocationAPI {
                 packageName,
                 "android.location.LocationManager",
                 "getGpsStatus",
-                new Object[]{android.location.GpsStatus.class}));
+                new Object[]{GpsStatus.class}));
         list.add(new MethodHook(
                 packageName,
                 "android.location.LocationManager",

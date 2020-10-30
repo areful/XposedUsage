@@ -1,10 +1,13 @@
-package cn.areful.xposed.sample.hooks;
+package com.chebada.hooklib.hookapis;
+
+import com.chebada.hooklib.hook.MethodHook;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.hook.MethodHook;
-
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public class HookStorageAPI {
 
     public static List<MethodHook> list(String packageName) {

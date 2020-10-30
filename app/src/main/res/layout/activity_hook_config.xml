@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="8dp"
-        tools:context=".MainActivity">
+        tools:context="com.chebada.hooklib.app.HookConfigActivity">
 
         <TextView
             android:id="@+id/currentPackageText"
@@ -29,14 +29,14 @@
             android:layout_weight="1"
             tools:itemCount="5"
             tools:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/main_list_item_view" />
+            tools:listitem="@layout/hook_list_item_view" />
 
         <Button
             android:id="@+id/btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/selector_main_ensure_btn"
+            android:background="@drawable/selector_hook_ensure_btn"
             android:enabled="false"
             android:gravity="center"
             android:padding="16dp"

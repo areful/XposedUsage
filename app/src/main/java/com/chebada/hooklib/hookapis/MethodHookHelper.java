@@ -1,13 +1,16 @@
-package cn.areful.xposed.sample.hooks;
+package com.chebada.hooklib.hookapis;
 
 import android.text.TextUtils;
+
+import com.chebada.hooklib.hook.MethodHook;
+import com.chebada.hooklib.hook.MethodHooker;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.hook.MethodHook;
-import cn.areful.xposed.hook.MethodHooker;
-
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public class MethodHookHelper extends MethodHooker {
 
     @Override

@@ -1,4 +1,4 @@
-package cn.areful.xposed.sample;
+package com.chebada.hooklib.app;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -11,13 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chebada.hooklib.app.databinding.HookListItemViewBinding;
+import com.chebada.hooklib.utils.ConfigUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.areful.xposed.sample.databinding.MainListItemViewBinding;
-import cn.areful.xposed.utils.ConfigUtils;
-
-public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
+public class HookConfigAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final PackageManager mPackageManager;
     private List<ApplicationInfo> mList = new ArrayList<>();
@@ -32,7 +35,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mListener = listener;
     }
 
-    public MainAdapter(PackageManager pm) {
+    public HookConfigAdapter(PackageManager pm) {
         mPackageManager = pm;
     }
 
@@ -91,11 +94,11 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     private static class MainViewHolder extends RecyclerView.ViewHolder {
-        private MainListItemViewBinding binding;
+        private HookListItemViewBinding binding;
 
         public static RecyclerView.ViewHolder newInstance(ViewGroup parent) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            View view = inflater.inflate(R.layout.main_list_item_view, parent, false);
+            View view = inflater.inflate(R.layout.hook_list_item_view, parent, false);
             return new MainViewHolder(view);
         }
 

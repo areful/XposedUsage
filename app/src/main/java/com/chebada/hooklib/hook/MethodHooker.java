@@ -1,14 +1,18 @@
-package cn.areful.xposed.hook;
+package com.chebada.hooklib.hook;
 
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.chebada.hooklib.utils.ConfigUtils;
+
 import java.util.List;
 
-import cn.areful.xposed.utils.ConfigUtils;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public abstract class MethodHooker {
     private static final String TAG = MethodHook.TAG;
 

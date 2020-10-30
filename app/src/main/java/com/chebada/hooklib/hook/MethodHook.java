@@ -1,11 +1,17 @@
-package cn.areful.xposed.hook;
+package com.chebada.hooklib.hook;
 
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook;
 
+/**
+ * Created by gj21798 on 2020/09/24.
+ */
 public class MethodHook extends XC_MethodHook {
-    public static final String TAG = "areful--";
+    public static final String TAG = "CbdMethodHook";
+    public static final String ACTION_NAME = "com.xbeats.myapplication.event";
+    public static final String EXTRA_METHOD_NAME = "apiName";
+    public static final String EXTRA_LOG = "log";
 
     public MethodHook(String packageName, String className, String methodName, Object[] args) {
         this.packageName = packageName;

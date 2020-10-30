@@ -1,4 +1,4 @@
-package cn.areful.xposed.utils;
+package com.chebada.hooklib.utils;
 
 import android.os.Environment;
 
@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.io.Writer;
 
 /**
- *
+ * Created by gj21798 on 2020/09/24.
  */
 public class ConfigUtils {
     private static final String FILE_NAME = Environment.getExternalStorageDirectory() + File.separator + "xposed_package_name";
@@ -36,7 +36,7 @@ public class ConfigUtils {
                 if (writer != null) {
                     writer.close();
                 }
-            } catch (IOException e2) {
+            } catch (Exception e2) {
                 e2.printStackTrace();
             }
         }
